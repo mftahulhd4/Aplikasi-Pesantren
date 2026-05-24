@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Surat Izin - {{ $perizinan->santri->nama_santri ?? '' }}</title>
+    <title>Surat Izin - {{ optional($perizinan->santri)->nama_santri ?? '' }}</title>
     <style>
         body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; color: #000; }
         .container { padding: 0 40px; }
@@ -36,13 +36,15 @@
         <div class="surat-body">
             <p>Yang bertanda tangan di bawah ini, Pengasuh Pondok Pesantren Nurul Amin, dengan ini memberikan izin kepada santri:</p>
             <table>
-                <tr><td class="label">Nama Lengkap</td><td>: {{ $perizinan->santri->nama_santri ?? 'N/A' }}</td></tr>
-                <tr><td class="label">Alamat</td><td>: {{ $perizinan->santri->alamat ?? 'N/A' }}</td></tr>
-                <tr><td class="label">Pendidikan</td><td>: {{ $perizinan->santri->pendidikan->nama_pendidikan ?? 'N/A' }}</td></tr>
+                <tr><td class="label">Nama Lengkap</td><td>: {{ optional($perizinan->santri)->nama_santri ?? 'N/A' }}</td></tr>
+                <tr><td class="label">Pendidikan</td><td>: {{ optional(optional($perizinan->santri)->pendidikan)->nama_pendidikan ?? 'N/A' }}</td></tr>
+                <tr><td class="label">Kelas</td><td>: {{ optional(optional($perizinan->santri)->kelas)->nama_kelas ?? 'N/A' }}</td></tr>
+                <tr><td class="label">Kamar</td><td>: {{ optional(optional($perizinan->santri)->kamar)->nama_kamar ?? 'N/A' }}</td></tr>
+                <tr><td class="label">Alamat</td><td>: {{ optional($perizinan->santri)->alamat ?? 'N/A' }}</td></tr>
             </table>
             <br>
             <p>
-                Untuk keperluan <strong>{{ $perizinan->keperluan }}</strong>, terhitung sejak tanggal 
+                Untuk keperluan <strong>{{ optional($perizinan->jenisPerizinan)->nama ?? 'N/A' }}</strong>, terhitung sejak tanggal 
                 <strong>{{ \Carbon\Carbon::parse($perizinan->waktu_pergi)->isoFormat('D MMMM Y') }}</strong> 
                 sampai dengan tanggal 
                 <strong>{{ \Carbon\Carbon::parse($perizinan->estimasi_kembali)->isoFormat('D MMMM Y') }}</strong>.

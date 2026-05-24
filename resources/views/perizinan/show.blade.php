@@ -33,7 +33,6 @@
                 </div>
 
                 <div class="p-6 text-gray-900 dark:text-gray-100 space-y-6">
-                    {{-- PERBAIKAN UTAMA DI BAGIAN INI --}}
                     @if($perizinan->santri)
                         <div class="flex items-center gap-4">
                             <a href="{{ route('santri.show', $perizinan->santri->id_santri) }}">
@@ -47,7 +46,8 @@
                                 </h3>
                                 <p class="text-sm text-gray-500 dark:text-gray-400 font-mono">{{ $perizinan->santri->id_santri }}</p>
                                 <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                                    {{ $perizinan->santri->pendidikan->nama_pendidikan ?? '' }} - {{ $perizinan->santri->kelas->nama_kelas ?? '' }}
+                                    {{ optional($perizinan->santri->pendidikan)->nama_pendidikan ?? '' }} - {{ optional($perizinan->santri->kelas)->nama_kelas ?? '' }}
+                                    <br> <span class="font-semibold">Kamar:</span> {{ optional($perizinan->santri->kamar)->nama_kamar ?? 'N/A' }}
                                 </p>
                             </div>
                         </div>
@@ -79,8 +79,8 @@
                         </div>
 
                         <div class="md:col-span-2">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Keperluan Izin</dt>
-                            <dd class="mt-1 text-base dark:text-gray-200">{{ $perizinan->keperluan }}</dd>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Jenis Perizinan</dt>
+                            <dd class="mt-1 text-base font-semibold dark:text-gray-200">{{ optional($perizinan->jenisPerizinan)->nama ?? 'N/A' }}</dd>
                         </div>
 
                         <div>

@@ -47,9 +47,6 @@
                 </li>
             @endcan
 
-            {{-- =============================================== --}}
-            {{--           FOKUS PERUBAHAN DI SINI              --}}
-            {{-- =============================================== --}}
             @can('is-admin')
             <span class="px-6 text-gray-400 text-xs uppercase mt-4 block">Admin</span>
             <li class="mt-2" x-data="{ open: {{ request()->routeIs('master.*') ? 'true' : 'false' }} }">
@@ -76,6 +73,24 @@
                             Status
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('master.kamar.index') }}" class="block px-4 py-2 text-sm {{ request()->routeIs('master.kamar.*') ? 'text-white font-bold' : 'text-gray-400' }} hover:text-white">
+                            Kamar
+                        </a>
+                    </li>
+                    
+                    {{-- =============================================== --}}
+                    {{--           LINK BARU DITAMBAHKAN DI SINI         --}}
+                    {{-- =============================================== --}}
+                    <li>
+                        <a href="{{ route('master.jenis-perizinan.index') }}" class="block px-4 py-2 text-sm {{ request()->routeIs('master.jenis-perizinan.*') ? 'text-white font-bold' : 'text-gray-400' }} hover:text-white">
+                            Jenis Izin
+                        </a>
+                    </li>
+                    {{-- =============================================== --}}
+                    {{--           AKHIR PENAMBAHAN LINK               --}}
+                    {{-- =============================================== --}}
+
                 </ul>
             </li>
             
@@ -85,10 +100,21 @@
                     <span class="ml-4">Manajemen User</span>
                 </a>
             </li>
+
+            {{-- =============================================== --}}
+            {{--           MENU LOG VIEWER DITAMBAHKAN DI SINI     --}}
+            {{-- =============================================== --}}
+            <li>
+                <a href="/log-viewer" class="flex items-center px-6 py-3 {{ request()->is('log-viewer*') ? 'bg-gray-700' : '' }} hover:bg-gray-700 transition-colors duration-200">
+                    <i class="fas fa-bug w-6 text-center"></i>
+                    <span class="ml-4">Log Viewer</span>
+                </a>
+            </li>
+            {{-- =============================================== --}}
+            {{--           AKHIR PENAMBAHAN MENU                 --}}
+            {{-- =============================================== --}}
+
             @endcan
-            {{-- =============================================== --}}
-            {{--            AKHIR PERUBAHAN DI SINI             --}}
-            {{-- =============================================== --}}
         </ul>
     </nav>
 
