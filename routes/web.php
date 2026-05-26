@@ -12,6 +12,8 @@ use App\Http\Controllers\DaftarTagihanController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\JenisPerizinanController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PelanggaranController;
+use App\Http\Controllers\JenisPelanggaranController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -80,6 +82,18 @@ Route::middleware('auth')->group(function () {
             return 'Gagal mencatat log. Error: ' . $e->getMessage();
         }
     });
+
+    Route::middleware(['auth'])->group(function () {
+    // Jalur khusus untuk AJAX Search Santri di menu pelanggaran
+    Route::get('/pelanggaran/search-santri', [PelanggaranController::class, 'searchSantri'])->name('pelanggaran.search');
+    
+    // Resource route untuk otomatisasi CRUD menu pelanggaran
+    Route::resource('pelanggaran', PelanggaranController::class);
+    Route::resource('jenis-pelanggaran', JenisPelanggaranController::class);
+});
+
+
+
 });
 
 require __DIR__ . '/auth.php';

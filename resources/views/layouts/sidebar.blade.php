@@ -45,7 +45,17 @@
                         <span class="ml-4">Tagihan</span>
                     </a>
                 </li>
+                
             @endcan
+
+                <li>
+                            <a href="{{ route('pelanggaran.index') }}" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md transition-colors {{ request()->routeIs('pelanggaran.*') ? 'bg-gray-700 text-white font-bold' : '' }}">
+            <svg class="w-5 height-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <span>Pelanggaran</span>
+</a>
+                </li>
 
             @can('is-admin')
             <span class="px-6 text-gray-400 text-xs uppercase mt-4 block">Admin</span>
@@ -85,6 +95,11 @@
                     <li>
                         <a href="{{ route('master.jenis-perizinan.index') }}" class="block px-4 py-2 text-sm {{ request()->routeIs('master.jenis-perizinan.*') ? 'text-white font-bold' : 'text-gray-400' }} hover:text-white">
                             Jenis Izin
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('jenis-pelanggaran.index') }}" class="flex items-center w-full p-2 text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-700 {{ request()->routeIs('jenis-pelanggaran.*') ? 'bg-gray-700 text-white font-bold' : '' }}">
+                            Jenis Pelanggaran
                         </a>
                     </li>
                     {{-- =============================================== --}}
