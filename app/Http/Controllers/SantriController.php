@@ -13,12 +13,7 @@ use Illuminate\Validation\Rule;
 use App\Exports\SantriExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
-<<<<<<< HEAD
-use App\Exports\SantriExport;
-use Maatwebsite\Excel\Facades\Excel;
-=======
 use Carbon\Carbon;
->>>>>>> 4df13f002a3a0e56a3e018ac1a0d8e0ffe403fd8
 
 class SantriController extends Controller
 {
@@ -154,13 +149,9 @@ class SantriController extends Controller
         $santri->delete();
         return redirect()->route('santri.index')->with('success', 'Data santri berhasil dihapus.');
     }
-    
-    // ===============================================
-    //           BAGIAN YANG DIPERBAIKI
-    // ===============================================
+
     public function exportExcel(Request $request)
     {
-        // Mengambil setiap nilai filter dari request
         $search = $request->input('search');
         $id_status = $request->input('id_status');
         $id_pendidikan = $request->input('id_pendidikan');
@@ -168,13 +159,11 @@ class SantriController extends Controller
         $jenis_kelamin = $request->input('jenis_kelamin');
         $id_kamar = $request->input('id_kamar');
 
-        // Mengirimkan setiap nilai sebagai argumen terpisah
-        return Excel::download(new SantriExport($search, $id_status, $id_pendidikan, $id_kelas, $jenis_kelamin, $id_kamar), 'daftar-santri.xlsx');
+        $fileName = 'daftar-santri-' . date('Y-m-d-His') . '.xlsx';
+
+        return Excel::download(new SantriExport($search, $id_status, $id_pendidikan, $id_kelas, $jenis_kelamin, $id_kamar), $fileName);
     }
-    // ===============================================
-    //           AKHIR PERBAIKAN
-    // ===============================================
-    
+
     public function detailPdf(Santri $santri)
     {
         $pdf = Pdf::loadView('santri.detail_pdf', compact('santri'));
@@ -185,21 +174,4 @@ class SantriController extends Controller
     {
         return view('santri.print', compact('santri'));
     }
-
-
-public function exportExcel(Request $request)
-{
-    // =================== PERBAIKAN ADA DI SINI ===================
-    // Mengambil parameter dengan nama yang BENAR sesuai form filter
-    $search = $request->get('search');
-    $statusId = $request->get('id_status');
-    $pendidikanId = $request->get('id_pendidikan');
-    $kelasId = $request->get('id_kelas');
-    // =============================================================
-
-    $fileName = 'daftar-santri-' . date('Y-m-d-His') . '.xlsx';
-
-    // Mengirim parameter dengan nama yang benar ke SantriExport
-    return Excel::download(new SantriExport($search, $statusId, $pendidikanId, $kelasId), $fileName);
-}
 }

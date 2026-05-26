@@ -84,17 +84,22 @@
         </div>
     </div>
 
-    {{-- =============================================== --}}
-    {{--           BAGIAN SCRIPT DIKEMBALIKAN            --}}
-    {{-- =============================================== --}}
     @push('scripts')
         <script>
             $(document).ready(function() {
                 function formatSantri (santri) {
                     if (santri.loading) { return santri.text; }
-                    var $container = $(`<div class='select2-result-santri'><div class='select2-result-santri__avatar'><img src='${santri.foto_url}' /></div><div class='select2-result-santri__meta'><div class='select2-result-santri__title'></div><div class='select2-result-santri__id'></div></div></div>`);
+                    
+                    // Logic perbaikan URL foto: Gunakan foto storage jika ada, jika tidak pakai inisial nama
+                    var fotoSrc = santri.foto 
+                        ? '/storage/fotos/' + santri.foto 
+                        : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(santri.nama_santri) + '&background=e5e7eb&color=374151';
+
+                    var $container = $(`<div class='select2-result-santri'><div class='select2-result-santri__avatar'><img src='${fotoSrc}' /></div><div class='select2-result-santri__meta'><div class='select2-result-santri__title'></div><div class='select2-result-santri__id'></div></div></div>`);
+                    
                     $container.find(".select2-result-santri__title").text(santri.nama_santri);
                     $container.find(".select2-result-santri__id").text("ID: " + santri.id_santri);
+                    
                     return $container;
                 }
 
@@ -124,15 +129,16 @@
                     escapeMarkup: function (markup) { return markup; }
                 });
 
-                // Hapus event handler filter_status dan enable/disable select santri
                 $('#id_santri_select').on('select2:select', function (e) {
                     var data = e.params.data;
                     $('#id_santri').val(data.id_santri);
                     $('#info-nama').text(data.nama_santri || '-');
                     $('#info-id').text(data.id_santri || '-');
-                    $('#info-kelas').text(data.nama_kelas || '-');
-                    $('#info-pendidikan').text(data.nama_pendidikan || '-');
-                    $('#info-kamar').text(data.nama_kamar || '-');
+                    
+                    // Logic perbaikan pembacaan data relasi
+                    $('#info-kelas').text(data.kelas ? data.kelas.nama_kelas : '-');
+                    $('#info-pendidikan').text(data.pendidikan ? data.pendidikan.nama_pendidikan : '-');
+                    $('#info-kamar').text(data.kamar ? data.kamar.nama_kamar : '-');
                 });
             });
         </script>
