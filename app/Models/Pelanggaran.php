@@ -19,7 +19,9 @@ class Pelanggaran extends Model
         'id_santri',
         'id_jenis_pelanggaran',
         'tanggal_melanggar',
-        'catatan_tindakan',
+        'kronologi',     // Tambahan baru
+        'sanksi',        // Tambahan baru
+        'keterangan',    // Tambahan baru
     ];
 
     protected $casts = [

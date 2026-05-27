@@ -86,9 +86,11 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['auth'])->group(function () {
     // Jalur khusus untuk AJAX Search Santri di menu pelanggaran
     Route::get('/pelanggaran/search-santri', [PelanggaranController::class, 'searchSantri'])->name('pelanggaran.search');
-    
-    // Resource route untuk otomatisasi CRUD menu pelanggaran
+
+    // CRUD Utama Log Pelanggaran Santri
     Route::resource('pelanggaran', PelanggaranController::class);
+
+    // CRUD Data Master Jenis Pelanggaran
     Route::resource('jenis-pelanggaran', JenisPelanggaranController::class);
 });
 

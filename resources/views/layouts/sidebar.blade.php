@@ -12,7 +12,8 @@
         </button>
     </div>
 
-    <nav class="mt-4 flex-grow">
+    {{-- PERBAIKAN: Menambahkan overflow-y-auto dan pb-4 agar bisa discroll --}}
+    <nav class="mt-2 flex-grow overflow-y-auto pb-4">
         <span class="px-6 text-gray-400 text-xs uppercase">Menu</span>
         <ul class="mt-2">
             <li>
@@ -45,21 +46,18 @@
                         <span class="ml-4">Tagihan</span>
                     </a>
                 </li>
-                
             @endcan
 
-                <li>
-                            <a href="{{ route('pelanggaran.index') }}" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md transition-colors {{ request()->routeIs('pelanggaran.*') ? 'bg-gray-700 text-white font-bold' : '' }}">
-            <svg class="w-5 height-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-            </svg>
-            <span>Pelanggaran</span>
-</a>
-                </li>
+            <li>
+                <a href="{{ route('pelanggaran.index') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('pelanggaran.*') ? 'bg-gray-700' : '' }} hover:bg-gray-700 transition-colors duration-200">
+                    <i class="fas fa-exclamation-triangle w-6 text-center text-yellow-500"></i>
+                    <span class="ml-4">Pelanggaran</span>
+                </a>
+            </li>
 
             @can('is-admin')
             <span class="px-6 text-gray-400 text-xs uppercase mt-4 block">Admin</span>
-            <li class="mt-2" x-data="{ open: {{ request()->routeIs('master.*') ? 'true' : 'false' }} }">
+            <li class="mt-2" x-data="{ open: {{ request()->routeIs('master.*') || request()->routeIs('jenis-pelanggaran.*') ? 'true' : 'false' }} }">
                 <button @click="open = !open" class="w-full flex justify-between items-center px-6 py-3 hover:bg-gray-700 transition-colors duration-200 text-left">
                     <div class="flex items-center">
                         <i class="fas fa-database w-6 text-center"></i>
@@ -88,24 +86,16 @@
                             Kamar
                         </a>
                     </li>
-                    
-                    {{-- =============================================== --}}
-                    {{--           LINK BARU DITAMBAHKAN DI SINI         --}}
-                    {{-- =============================================== --}}
                     <li>
                         <a href="{{ route('master.jenis-perizinan.index') }}" class="block px-4 py-2 text-sm {{ request()->routeIs('master.jenis-perizinan.*') ? 'text-white font-bold' : 'text-gray-400' }} hover:text-white">
                             Jenis Izin
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('jenis-pelanggaran.index') }}" class="flex items-center w-full p-2 text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-700 {{ request()->routeIs('jenis-pelanggaran.*') ? 'bg-gray-700 text-white font-bold' : '' }}">
+                        <a href="{{ route('jenis-pelanggaran.index') }}" class="block px-4 py-2 text-sm {{ request()->routeIs('jenis-pelanggaran.*') ? 'text-white font-bold' : 'text-gray-400' }} hover:text-white">
                             Jenis Pelanggaran
                         </a>
                     </li>
-                    {{-- =============================================== --}}
-                    {{--           AKHIR PENAMBAHAN LINK               --}}
-                    {{-- =============================================== --}}
-
                 </ul>
             </li>
             
@@ -116,29 +106,22 @@
                 </a>
             </li>
 
-            {{-- =============================================== --}}
-            {{--           MENU LOG VIEWER DITAMBAHKAN DI SINI     --}}
-            {{-- =============================================== --}}
             <li>
                 <a href="/log-viewer" class="flex items-center px-6 py-3 {{ request()->is('log-viewer*') ? 'bg-gray-700' : '' }} hover:bg-gray-700 transition-colors duration-200">
                     <i class="fas fa-bug w-6 text-center"></i>
                     <span class="ml-4">Log Viewer</span>
                 </a>
             </li>
-            {{-- =============================================== --}}
-            {{--           AKHIR PENAMBAHAN MENU                 --}}
-            {{-- =============================================== --}}
-
             @endcan
         </ul>
     </nav>
 
-    <div class="mt-auto">
+    <div class="mt-auto border-t border-gray-700">
          <form method="POST" action="{{ route('logout') }}">
             @csrf
             <a href="{{ route('logout') }}"
                onclick="event.preventDefault(); this.closest('form').submit();"
-               class="flex items-center px-6 py-3 text-red-400 hover:bg-red-700 transition-colors duration-200">
+               class="flex items-center px-6 py-4 text-red-400 hover:bg-red-700 hover:text-white transition-colors duration-200">
                 <i class="fas fa-sign-out-alt w-6 text-center"></i>
                 <span class="ml-4">Logout</span>
             </a>

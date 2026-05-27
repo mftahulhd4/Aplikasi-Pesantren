@@ -22,13 +22,15 @@ class JenisPelanggaranController extends Controller
     {
         $validated = $request->validate([
             'nama_pelanggaran' => 'required|string|max:255',
-            'poin_minus' => 'required|integer|min:0',
-            'kategori' => 'required|in:Ringan,Sedang,Berat',
-            'keterangan' => 'nullable|string'
         ]);
 
+        // Isi otomatis di belakang layar agar database tidak error
+        $validated['poin_minus'] = 0;
+        $validated['kategori'] = 'Ringan';
+        $validated['keterangan'] = '-';
+
         JenisPelanggaran::create($validated);
-        return redirect()->route('jenis-pelanggaran.index')->with('success', 'Master jenis pelanggaran berhasil ditambahkan.');
+        return redirect()->route('jenis-pelanggaran.index')->with('success', 'Data pelanggaran berhasil ditambahkan.');
     }
 
     public function edit(JenisPelanggaran $jenis_pelanggaran)
@@ -40,18 +42,15 @@ class JenisPelanggaranController extends Controller
     {
         $validated = $request->validate([
             'nama_pelanggaran' => 'required|string|max:255',
-            'poin_minus' => 'required|integer|min:0',
-            'kategori' => 'required|in:Ringan,Sedang,Berat',
-            'keterangan' => 'nullable|string'
         ]);
 
         $jenis_pelanggaran->update($validated);
-        return redirect()->route('jenis-pelanggaran.index')->with('success', 'Master jenis pelanggaran berhasil diperbarui.');
+        return redirect()->route('jenis-pelanggaran.index')->with('success', 'Data pelanggaran berhasil diperbarui.');
     }
 
     public function destroy(JenisPelanggaran $jenis_pelanggaran)
     {
         $jenis_pelanggaran->delete();
-        return redirect()->route('jenis-pelanggaran.index')->with('success', 'Master jenis pelanggaran berhasil dihapus.');
+        return redirect()->route('jenis-pelanggaran.index')->with('success', 'Data pelanggaran berhasil dihapus.');
     }
 }
